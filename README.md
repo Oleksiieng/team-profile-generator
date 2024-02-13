@@ -4,6 +4,8 @@
 This Node.js command-line application takes information about employees of a software engineering team and generates an HTML webpage that displays summaries for each person. Built with Test-Driven Development (TDD) approach, the application ensures that all development is guided by tests, aiming for high reliability and easy maintenance. This project includes unit tests for each part of the code to guarantee functionality.
 ![Screenshot of Application](img/screen.png)
 
+https://oleksiieng.github.io/team-profile-generator/output/team.html
+
 ## User Story
 
 **AS A** manager  
