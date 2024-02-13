@@ -11,6 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./src/page-template.js");
 
 const teamMembers = [];
+let currentId = 1;
 
 const questions = {
     name: {
@@ -18,12 +19,6 @@ const questions = {
         name: 'name',
         message: "What is the team manager's name?",
         validate: (input) => input.trim() ? true : 'Name cannot be empty.',
-    },
-    id: {
-        type: 'input',
-        name: 'id',
-        message: "What is the team manager's id?",
-        validate: (input) => /^\d+$/.test(input) ? true : 'Please enter a valid ID (numbers only).',
     },
     email: {
         type: 'input',
@@ -57,11 +52,10 @@ function promptManager() {
     console.log("Please build your team");
     return inquirer.prompt([
         questions.name,
-        questions.id,
         questions.email,
         questions.officeNumber,
     ]).then(answers => {
-        const manager = new Manager(answers.id, answers.name, answers.email, answers.officeNumber);
+        const manager = new Manager(currentId++, answers.name, answers.email, answers.officeNumber);
         teamMembers.push(manager);
         promptMenu();
     });
@@ -70,11 +64,10 @@ function promptManager() {
 function promptEngineer() {
     return inquirer.prompt([
         questions.name,
-        questions.id,
         questions.email,
         questions.github,
     ]).then(answers => {
-        const engineer = new Engineer(answers.id, answers.name, answers.email, answers.github);
+        const engineer = new Engineer(currentId++, answers.name, answers.email, answers.github);
         teamMembers.push(engineer);
         promptMenu();
     });
@@ -83,11 +76,10 @@ function promptEngineer() {
 function promptIntern() {
     return inquirer.prompt([
         questions.name,
-        questions.id,
         questions.email,
         questions.school,
     ]).then(answers => {
-        const intern = new Intern(answers.id, answers.name, answers.email, answers.school);
+        const intern = new Intern(currentId++, answers.name, answers.email, answers.school);
         teamMembers.push(intern);
         promptMenu();
     });
