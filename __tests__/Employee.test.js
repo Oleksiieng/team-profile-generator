@@ -37,12 +37,12 @@ test("Can get id via getId()", () => {
 
 test("Can get email via getEmail()", () => {
   const testValue = "test@test.com";
-  const e = new Employee("Foo", 1, testValue);
+  const e = new Employee(1, "Foo", testValue);
   expect(e.getEmail()).toBe(testValue);
 });
 
 test("getRole() should return \"Employee\"", () => {
   const testValue = "Employee";
-  const e = new Employee("Alice", 1, "test@test.com");
+  const e = new Employee(1, "Alice", "test@test.com");
   expect(e.getRole()).toBe(testValue);
 });
