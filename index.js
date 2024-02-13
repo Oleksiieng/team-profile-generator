@@ -10,4 +10,134 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
+const teamMembers = [];
 
+function promptManager() {
+    console.log("Please build your team");
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the team manager's name?",
+            validate: (input) => input.trim() ? true : 'Name cannot be empty.',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the team manager's id?",
+            validate: (input) => /^\d+$/.test(input) ? true : 'Please enter a valid ID (numbers only).',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the team manager's email?",
+            validate: (input) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input) ? true : 'Please enter a valid email.',
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: "What is the team manager's office number?",
+            validate: (input) => /^\d+$/.test(input) ? true : 'Please enter a valid office number (numbers only).',
+        }
+    ]).then(answers => {
+        const manager = new Manager(answers.id, answers.name, answers.email, answers.officeNumber);
+        teamMembers.push(manager);
+        promptMenu();
+    });
+}
+
+function promptEngineer() {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the team manager's name?",
+            validate: (input) => input.trim() ? true : 'Name cannot be empty.',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the team manager's id?",
+            validate: (input) => /^\d+$/.test(input) ? true : 'Please enter a valid ID (numbers only).',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the team manager's email?",
+            validate: (input) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input) ? true : 'Please enter a valid email.',
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: 'What is the engineer\'s GitHub username?',
+            validate: (input) => input.trim() ? true : 'GitHub username cannot be empty.',
+        }
+    ]).then(answers => {
+        const engineer = new Engineer(answers.id, answers.name, answers.email, answers.github);
+        teamMembers.push(engineer);
+        promptMenu();
+    });
+}
+
+function promptIntern() {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: "What is the team manager's name?",
+            validate: (input) => input.trim() ? true : 'Name cannot be empty.',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: "What is the team manager's id?",
+            validate: (input) => /^\d+$/.test(input) ? true : 'Please enter a valid ID (numbers only).',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: "What is the team manager's email?",
+            validate: (input) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input) ? true : 'Please enter a valid email.',
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: 'What school does the intern attend?',
+            validate: (input) => input.trim() ? true : 'School name cannot be empty.',
+        }
+    ]).then(answers => {
+        const intern = new Intern(answers.id, answers.name, answers.email, answers.school);
+        teamMembers.push(intern);
+        promptMenu();
+    });
+}
+
+function promptMenu() {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'action',
+            message: 'What would you like to do next?',
+            choices: ['Add an engineer', 'Add an intern', 'Finish building the team']
+        }
+    ]).then(answers => {
+        switch (answers.action) {
+            case 'Add an engineer':
+                promptEngineer();
+                break;
+            case 'Add an intern':
+                promptIntern();
+                break;
+            case 'Finish building the team':
+                buildTeam();
+                break;
+        }
+    });
+}
+
+function buildTeam() {
+    console.log(teamMembers);
+    console.log('Successfully created team.html in the output folder');
+}
+
+promptManager();
