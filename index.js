@@ -117,7 +117,11 @@ function promptMenu() {
 }
 
 function buildTeam() {
-    console.log(teamMembers);
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+    
+    fs.writeFileSync(outputPath, render(teamMembers), 'utf-8');
     console.log('Successfully created team.html in the output folder');
 }
 
